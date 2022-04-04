@@ -1,0 +1,24 @@
+{
+  "name": "crud",
+  "version": "1.0.0",
+  "description": "Insert, Update and Delete",
+  "main": "server.js",
+  "scripts": {
+    
+    "start": "nodemon server.js",
+    "devStart": "nodemon server.js"
+  },
+  "keywords": [
+    "CRUD"
+  ],
+  "author": "Shivam Shukla",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "express": "^4.17.3",
+    "express-handlebars": "^6.0.3",
+    "mongoose": "^6.2.6",
+    "nodemon": "^2.0.15",
+    "path": "^0.12.7"
+  }
+}

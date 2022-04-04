@@ -1,0 +1,65 @@
+<h3>{{viewTitle}}</h3>
+
+<form action="/employee" method="post" autocomplete="off">
+<input type="hidden" name="_id" value={{emp._id}}>
+
+<div class="form-group">
+    <label>Full Name</label>
+    <input type="text" class="form-control" name="fullName" placeholder="Full Name" value="{{emp.fullName}}">
+    <div class="text-danger">
+        {{emp.fullNameError}}
+    </div>
+</div>
+
+<div class="form-group">
+    <label>E-mail</label>
+    <input type="text" class="form-control" name="email" placeholder="email" value="{{emp.email}}">
+    <div class="text-danger">
+        {{emp.emailError}}
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label>Mobile</label>
+        <input type="text" class="form-control" name="mobile" placeholder="mobile" value="{{emp.mobile}}">
+        <div class="text-danger">
+            {{emp.mobileError}}
+        </div>
+    </div>
+
+    <div class="form-group col-md-6">
+        <label>City</label>
+        <input type="text" class="form-control" name="city" placeholder="City" value="{{emp.city}}">
+        <div class="text-danger">
+            {{emp.cityError}}
+        </div>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label>Age</label>
+        <input type="text" class="form-control" name="age" placeholder="Age" value="{{emp.age}}">
+        <div class="text-danger">
+            {{emp.ageError}}
+        </div>
+    </div>
+
+    <div class="form-group col-md-6">
+        <label>Salary</label>
+        <input type="text" class="form-control" name="salary" placeholder="Salary" value="{{emp.salary}}">
+        <div class="text-danger">
+            {{emp.salaryError}}
+        </div>
+    </div>
+</div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-info"><i class="fa fa-database"></i> Submit</button>
+        <a class="btn btn-secondary" href="/employee/list"><i class="fa fa-list-alt"></i> View All</a>
+    </div>
+
+</div>
+
+</form>
