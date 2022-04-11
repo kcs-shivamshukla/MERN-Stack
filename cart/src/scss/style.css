@@ -1,0 +1,90 @@
+.App {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.nav-wrapper {
+  font-weight: 600;
+  background-color: #191919;
+}
+
+.center {
+  font-weight: 600;
+  color: #fff;
+}
+
+.box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.box .card {
+  width: 300px;
+}
+
+.box .card .card-image {
+  width: 100%;
+  background-size: cover;
+}
+
+.box .card .card-image .card-title {
+  font-weight: 600;
+}
+
+.box .card .card-image .card-title .material-icons {
+  font-size: 2.4em;
+  cursor: pointer;
+}
+
+.cart {
+  margin-top: 40px;
+}
+
+.cart h5 {
+  font-weight: 600;
+}
+
+.cart .collection {
+  border: 0;
+}
+
+.cart .collection .collection-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border: 0;
+}
+
+.cart .collection .collection-item .avatar {
+  color: #191919;
+}
+
+.cart .collection .collection-item img {
+  width: 450px;
+  margin-right: 25px;
+}
+
+.cart .collection .collection-item .item-desc {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+.cart .collection .collection-item .item-desc .title {
+  font-weight: 600;
+  font-size: 28px;
+  display: block;
+  margin: 20px 0;
+}
+
+.container .collection {
+  list-style: none;
+}
+/*# sourceMappingURL=style.css.map */
