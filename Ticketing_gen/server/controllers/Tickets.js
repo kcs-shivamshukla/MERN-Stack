@@ -9,6 +9,7 @@ const createTicket = async (req, res) => {
     
     res.status(201).json(newTicket);
   } catch (error) {
+    console.log(error);
     res.status(409).json({ message: error.message });
   }
 };

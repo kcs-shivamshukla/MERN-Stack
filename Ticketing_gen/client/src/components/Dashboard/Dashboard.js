@@ -27,10 +27,10 @@ export const Dashboard = () => {
   const handleClose = () => setOpen(false);
 
   const [ticketData, setTicketData] = useState({
-    creator: "",
+
     usrname: user?.usrname,
     ticket_desc: "",
-    ticket_no: Math.floor(100000 + Math.random() * 900000),
+    ticket_no: '#' + Math.floor(100000 + Math.random() * 900000),
   });
 
   const handleSubmit = (e) => {

@@ -11,8 +11,8 @@ const {
 const router = Router();
 
 router.get("/", getTickets);
-router.post("/", createTicket);
-router.put("/:id", updateTicket);
-router.post("/delete/:id", deleteTicket);
+router.post("/",auth, createTicket);
+router.put("/:id",auth, updateTicket);
+router.post("/delete/:id",auth, deleteTicket);
 
 module.exports = router;
