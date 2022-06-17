@@ -1,53 +1,83 @@
-import React, {  useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { AppBar, Avatar, Button, Toolbar, Typography } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import decode from 'jwt-decode'
+import { AppBar, Avatar, Button, Toolbar, Typography } from "@mui/material";
 import { HiTicket } from "react-icons/hi";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 
-import useStyles from './styles';
+import useStyles from "./styles";
 
 const Navbar = () => {
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const [userToken, setUserToken] = useState(localStorage.getItem("token"));
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  // const location = useLocation();
 
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-    const classes = useStyles();
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    // const location = useLocation();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const logout = () => {
+    dispatch({ type: "LOGOUT" });
 
+    navigate("/");
 
-    const logout = () => {
-      dispatch({ type: 'LOGOUT' });
+    setUser(null);
+  };
 
-      navigate('/')
+  useEffect(() => {
+    const token = userToken?.token;
+    if (token) {
+      const decodedToken = decode(token)
 
-      setUser(null);
+      if(decodedToken.exp * 1000 < new Date().getTime()) logout();
     }
 
-    // useEffect(() => {
-    //   const token = user?.token
-
-    //   setUser(JSON.parse(localStorage.getItem('profile')));
-    // },[location])
+    setUserToken(localStorage.getItem('token'));
+  },[userToken.token, logout])
 
   return (
-    <AppBar className={classes.appBar} position="static" color="inherit" style={{flexDirection: 'row'}}>
-        <div className={classes.brandContainer}>
-        <Typography component={Link} to='/' className={classes.heading} variant="h2" align="center">
-            Tickets <HiTicket className={classes.icon} />
-          </Typography>
-        </div> 
+    <AppBar
+      className={classes.appBar}
+      position="static"
+      color="inherit"
+      style={{ flexDirection: "row" }}
+    >
+      <div className={classes.brandContainer}>
+        <Typography
+          className={classes.heading}
+          variant="h2"
+          align="center"
+        >
+          Tickets <HiTicket className={classes.icon} />
+        </Typography>
+      </div>
 
-        <Toolbar className={classes.toolbar}>
+      <Toolbar className={classes.toolbar}>
         {
-                <div className={classes.profile}>
-                    <Avatar className = {classes.purple} alt={user?.name} src={user?.imageURL} sx ={{backgroundColor: '#6C63FF'}}>{user?.usrname.charAt(0).toUpperCase()}</Avatar>
-                    <Typography className={classes.userName} variant='h6'>{user?.usrname}</Typography>
-                    <Button className={classes.logout} variant='contained' onClick={logout} style={{backgroundColor: "#6C63FF"}}>Logout</Button>
-                </div>
+          <div className={classes.profile}>
+            <Avatar
+              alt={user?.name}
+              src={user?.imageURL}
+              sx={{ backgroundColor: "#6C63FF" }}
+            >
+              {user?.usrname.charAt(0).toUpperCase()}
+            </Avatar>
+            <Typography className={classes.userName} variant="h6">
+              {user?.usrname}
+            </Typography>
+            <Button
+              className={classes.logout}
+              variant="contained"
+              onClick={logout}
+              style={{ backgroundColor: "#6C63FF" }}
+            >
+              Logout
+            </Button>
+          </div>
         }
-        </Toolbar>
-        </AppBar>
-  )
-}
+      </Toolbar>
+    </AppBar>
+  );
+};
 
-export default Navbar
+export default Navbar;

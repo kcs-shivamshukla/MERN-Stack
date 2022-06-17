@@ -2,7 +2,6 @@ import * as api from '../api';
 
 export const signin = (formData, navigate) => async(dispatch) => {
     try {
-        
         const { data } = await api.signIn(formData);
 
         dispatch({type: 'AUTH', payload: data});
@@ -20,7 +19,7 @@ export const signup = (formData, navigate) => async(dispatch) => {
 
         dispatch({type: 'AUTH', payload: data});
 
-        navigate('/Signin');
+        navigate('/Dashboard');
     } catch (error) {
         console.log(error);
     }

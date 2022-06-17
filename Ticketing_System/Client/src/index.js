@@ -12,7 +12,8 @@ import App from './App';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
-const store = createStore(reducers, compose(applyMiddleware(thunk)));
+const store = createStore(reducers, compose(applyMiddleware(thunk))
+  );
 
 root.render(
     <Provider store={store}>

@@ -1,11 +1,18 @@
-import express from "express";
-import { getTickets, createTicket, updateTicket, deleteTicket } from "../controllers/tickets.js";
+const { auth } = require('../middleware/auth.js')
+const { Router } = require("express");
 
-const router = express.Router();
+const {
+  getTickets,
+  createTicket,
+  updateTicket,
+  deleteTicket,
+} = require("../controllers/tickets.js");
 
-router.get('/', getTickets)
-router.post('/', createTicket)
-router.put('/:id', updateTicket)
-router.post('/delete/:id', deleteTicket)
+const router = Router();
 
-export default router;
+router.get("/", getTickets);
+router.post("/", createTicket);
+router.put("/:id", updateTicket);
+router.post("/delete/:id", deleteTicket);
+
+module.exports = router;

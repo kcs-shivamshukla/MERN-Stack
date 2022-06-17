@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Grow, Grid, Button, Box} from "@mui/material";
+import { Container, Grow, Grid, Button, Box } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -11,10 +11,9 @@ import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@mui/material";
 
 import { getTickets, createTicket } from "../../actions/tickets";
-import Ticket from "../../components/Tickets/Ticket/Ticket";
+import Ticket from "../Ticket/Ticket";
 import Navbar from "../Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
-
 
 export const Dashboard = () => {
   const dispatch = useDispatch();
@@ -22,28 +21,33 @@ export const Dashboard = () => {
   const theme = createTheme();
 
   const [open, setOpen] = React.useState(false);
-  const user = JSON.parse(localStorage.getItem('profile'));
+  const user = JSON.parse(localStorage.getItem("profile"));
+  const token = localStorage.getItem("token");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const [ticketData, setTicketData] = useState({
-    creator: '', emp_id: '',usrname: user?.usrname, ticket_desc: '', 
-});
+    creator: "",
+    usrname: user?.usrname,
+    ticket_desc: "",
+    ticket_no: Math.floor(100000 + Math.random() * 900000),
+  });
 
-const handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createTicket(ticketData));
-    setTicketData({...ticketData, emp_id: '', ticket_desc: ''})
+    setTicketData({ ...ticketData, emp_id: "", ticket_desc: "" });
     handleClose();
-}
-
+  };
 
   useEffect(() => {
-    if(!user) {
-      navigate('/')
+    if (!user || !token) {
+      localStorage.clear();
+      navigate("/");
+
     }
     dispatch(getTickets());
-  },[dispatch, user, navigate]);
+  }, [dispatch, user, navigate, token]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -51,58 +55,55 @@ const handleSubmit = (e) => {
         <Navbar />
         <Grow in>
           <Container>
-            <Box textAlign='center'>
-                <Button variant="contained" onClick={handleOpen} style={{ backgroundColor: '#6C63FF'}}>Add Ticket</Button>
+            <Box textAlign="center">
+              <Button
+                variant="contained"
+                onClick={handleOpen}
+                style={{ backgroundColor: "#6C63FF" }}
+              >
+                Add Ticket
+              </Button>
             </Box>
-          <Dialog open={open} onClose={handleClose}>
-          <DialogTitle align="center">Add Ticket</DialogTitle>
-          <DialogContent>
-            <TextField 
-            name='emp_id' 
-            variant='outlined' 
-            label='Emp_id' 
-            value={ticketData.emp_id}
-            onChange={(e) => 
-             setTicketData({...ticketData, emp_id: e.target.value})}
-             sx={{
-                 marginTop: '20px',
-                 width: 500
-             }}
-             />
-            
-            <TextField 
-            name='usrname' 
-            variant='outlined' 
-            label='User Name' 
-            value={ticketData.usrname}
-            disabled
-             sx={{
-                 marginTop: '20px',
-                 width: 500
-             }}
-             />
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle align="center">Add Ticket</DialogTitle>
+              <DialogContent>
+                <TextField
+                  name="usrname"
+                  variant="outlined"
+                  label="User Name"
+                  value={ticketData.usrname}
+                  disabled
+                  sx={{
+                    marginTop: "20px",
+                    width: 500,
+                  }}
+                />
 
-
-            <TextField
-              id="outlined-disabled"
-              label="Ticket Desc"
-              required
-              name="ticket_desc"
-              value={ticketData.ticket_desc}
-              onChange={(e) =>
-                setTicketData({ ...ticketData, ticket_desc: e.target.value })
-              }
-              sx={{
-                marginTop: "20px",
-                width: 500,
-              }}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleSubmit}>Submit</Button>
-          </DialogActions>
-        </Dialog>
+                <TextField
+                  multiline
+                  rows={5}
+                  id="outlined-disabled"
+                  label="Ticket Desc"
+                  required
+                  name="ticket_desc"
+                  value={ticketData.ticket_desc}
+                  onChange={(e) =>
+                    setTicketData({
+                      ...ticketData,
+                      ticket_desc: e.target.value,
+                    })
+                  }
+                  sx={{
+                    marginTop: "20px",
+                    width: 500,
+                  }}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={handleSubmit}>Submit</Button>
+              </DialogActions>
+            </Dialog>
 
             <Grid container>
               <Ticket />

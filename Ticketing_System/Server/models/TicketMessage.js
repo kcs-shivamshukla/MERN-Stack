@@ -1,25 +1,23 @@
-import mongoose from 'mongoose';
+const { Schema, model } = require("mongoose");
 
-const ticketSchema = mongoose.Schema({
-    ticket_no: Number,
-    emp_id: String,
-    usrname: String,
-    ticket_desc: String,
-    date: {
-        type: Date
+const ticketSchema = new Schema(
+  {
+    ticket_no: {
+      type: String,
+      required: true,
     },
-    created_At: {
-        type: String,
-        default: new Date()
-    },
-    updated_At: {
-        type: String
-    },
+    emp_id: { type: String },
+    usrname: { type: String, required: true },
+    ticket_desc: { type: String, required: true },
     deleted_At: {
-        type: String
-    }
-});
+      type: Date,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-const TicketMessage = mongoose.model('TicketMessage', ticketSchema);
+const TicketMessageModel = model("TicketMessage", ticketSchema);
 
-export default TicketMessage;
+module.exports = TicketMessageModel;

@@ -1,25 +1,33 @@
-import express from "express";
-import bodyParser from "body-parser";
-import mongoose from "mongoose";
-import cors from "cors";
 
-import ticketRoutes from './routes/tickets.js';
-import userRoutes from './routes/users.js'
+const express = require("express");
+const cors = require("cors");
+
+const connectDB = require('./db/db.js')
+
+const ticketRoutes = require("./routes/tickets.js");
+const userRoutes = require("./routes/users.js");
+
+const config = require("./config");
 
 const app = express();
 
-app.use(bodyParser.json({limit: "30mb", extended: true}));
-app.use(bodyParser.urlencoded({limit: "30mb", extended: true}));
-app.use(cors());
+app.use(cors()); // To verify cross origin requests (for eg: Accepts only 3000 port requests)
 
-app.use('/tickets', ticketRoutes);
-app.use('/user', userRoutes);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-const CONNECTION_URL = 'mongodb+srv://shivamp:shivamp1234@cluster0.csg93.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
-const PORT = process.env.PORT || 5000;
 
-mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
-    .catch((error) => console.log(error.message));
+app.use("/tickets", ticketRoutes);
+app.use("/user", userRoutes);
 
-// mongoose.set('useFindAndModify', false);  <----No longer necessary
+connectDB();
+const server = async () => {
+    try {
+      await app.listen(config.PORT, () => {
+        console.log(`✅ Server running on port: http://localhost:${config.PORT}`);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  server();
