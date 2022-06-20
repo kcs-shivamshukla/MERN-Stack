@@ -21,6 +21,6 @@ export const signup = (formData, navigate) => async(dispatch) => {
 
         navigate('/Dashboard');
     } catch (error) {
-        console.log(error);
+        console.log(error.response);
     }
 }

@@ -6,6 +6,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import { useDispatch } from "react-redux";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@mui/material";
@@ -24,7 +26,10 @@ export const Dashboard = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
   const token = localStorage.getItem("token");
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setTicketData({...ticketData, ticket_desc: ""});
+  }
 
   const [ticketData, setTicketData] = useState({
 
@@ -37,6 +42,7 @@ export const Dashboard = () => {
     e.preventDefault();
     dispatch(createTicket(ticketData));
     setTicketData({ ...ticketData, emp_id: "", ticket_desc: "" });
+    toast.success('Ticket Created.')
     handleClose();
   };
 
@@ -110,6 +116,8 @@ export const Dashboard = () => {
             </Grid>
           </Container>
         </Grow>
+        <ToastContainer
+        autoClose={2000} />
       </Container>
     </ThemeProvider>
   );

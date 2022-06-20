@@ -17,23 +17,21 @@ import { useDispatch } from 'react-redux';
 import { validName, validUsername, validPassword } from '../../regex/regex'
 
 const initialState = {firstName: '', lastName: '', usrname: '', password: ''}
-const initialIsValidValue = { isfirstName: '', islastName: '', isusrname: '', ispassword: '' }
+const initialFormValidateValue = { firstName: false, lastName: false, usrname: false, password: false}
 
 const theme = createTheme();
 
 export default function Register() {
 
   const [formData, setFormData] = useState(initialState);
-  const [isValid, setIsValid] = useState(initialIsValidValue);
-  const { isfirstName, islastName, isusrname, ispassword } = isValid;
-  const validationMessageCSS = {color:'red',marginBottom:'10px'}
+  const [validateForm, setValidateForm] = useState(initialFormValidateValue);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   var flag=true;
-  const validateDetailsFlag = Object.values(isValid).every(value => {
-      if (value!==null && value!=='') {
+  const validateDetailsFlag = Object.values(formData).every(value => {
+      if (value === '') {
           flag=false;
       }
       return flag;
@@ -57,37 +55,17 @@ export default function Register() {
   }
 
   const handleChange = (e,regEx) => {
-    const RegExObj=new RegExp(regEx);
-    const isValidKey='is'+e.target.name;
+
+    const RegExObj = new RegExp(regEx);
     
     if(e.target.value==="" || RegExObj.test(e.target.value))
     {
-        setIsValid({...isValid,[isValidKey]:''});
+        setValidateForm({...validateForm, [e.target.name]: false});
         setFormData({...formData, [e.target.name]: e.target.value});
         
     }
     else{
-      switch (e.target.name) {
-        case 'firstName':
-        case 'lastName':
-
-          setIsValid({...isValid,[isValidKey]:'Only Characters Allowed!'});
-            
-          break;
-
-        case 'usrname':
-
-          setIsValid({...isValid,[isValidKey]:'Minimum 5 characters. Maximum 15 characters.'});
-          break;
-
-        case 'password':
-
-          setIsValid({...isValid,[isValidKey]:'Minimum 8 characters. Maximum 16 characters. password should contain at least one number and one special character'});
-          break;
-        
-          default:
-            break;
-        }
+        setValidateForm({...validateForm, [e.target.name]: true});
     }
   }
 
@@ -122,7 +100,7 @@ export default function Register() {
           <Avatar sx={{ m: 1, bgcolor: '#6C63FF' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" sx={{ mb: 3}}>
             Sign up
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ padding: '0 50px', mt: 1 }}>
@@ -134,13 +112,15 @@ export default function Register() {
                   value={formData.firstName}
                   required
                   fullWidth
+                  error={validateForm.firstName}
+                  helperText={validateForm.firstName ? "Only Characters allowed" : ""}
                   id="firstName"
                   label="First Name"
                   autoFocus
                   onChange={(e) => handleChange(e,validName)}
                   onBlur={(e) => handleChange(e,validName)}
                 />
-                <div style={validationMessageCSS}>{isfirstName}</div>
+    
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -149,12 +129,14 @@ export default function Register() {
                   value={formData.lastName}
                   id="lastName"
                   label="Last Name"
+                  error={validateForm.lastName}
+                  helperText={validateForm.lastName ? "Only Characters allowed" : ""}
                   name="lastName"
                   autoComplete="family-name"
                   onChange={(e) => handleChange(e,validName)}
                   onBlur={(e) => handleChange(e,validName)}
                 />
-                <div style={validationMessageCSS}>{islastName}</div>
+               
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -163,12 +145,14 @@ export default function Register() {
                   value={formData.usrname}
                   id="usrname"
                   label="User Name"
+                  error={validateForm.usrname}
+                  helperText={validateForm.usrname ? "Username must contain alphanumeric character." : ""}
                   name="usrname"
                   autoComplete="usrname"
                   onChange={(e) => onChangeSetState(e)}
                   onBlur={(e) => handleChange(e, validUsername)}
                 />
-                <div style={validationMessageCSS}>{isusrname}</div>
+               
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -179,16 +163,19 @@ export default function Register() {
                   label="Password"
                   type="password"
                   id="password"
+                  error={validateForm.password}
+                  helperText={validateForm.password ? "password must contain one number and one special characters." : ""}
                   autoComplete="new-password"
                   onChange={(e) => onChangeSetState(e)}
                   onBlur={(e) => handleChange(e, validPassword)}
                 />
-                <div style={validationMessageCSS}>{ispassword}</div>
+                
               </Grid>
             </Grid>
             <Button
               type="submit"
               fullWidth
+              disabled={!validateDetailsFlag}
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               style={{backgroundColor: '#6C63FF'}}

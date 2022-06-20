@@ -20,7 +20,10 @@ const EditTicket = ({cellValues}) => {
     const user = JSON.parse(localStorage.getItem('profile'))
 
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
+      setOpen(false);
+      setTicketData({...ticketData, ticket_desc: cellValues.row.ticket_desc});
+    }
 
     const handleSubmit = (e) => {
       e.preventDefault();

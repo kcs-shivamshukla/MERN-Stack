@@ -12,61 +12,59 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import heroimg from "../../images/login.svg";
 import { signin } from "../../actions/auth";
 import { validPassword, validUsername } from "../../regex/regex";
 
 const initialState = { usrname: "", password: "" };
-const initialIsValidValue = { isusrname: "", ispassword: "" };
+const initialFormValidateValue = { firstName: false, lastName: false, usrname: false, password: false}
 
 const theme = createTheme();
 
 export default function SignInSide() {
   const [formData, setFormData] = useState(initialState);
+  const [validateForm, setValidateForm] = useState(initialFormValidateValue);
 
-  const [isValid, setIsValid] = useState(initialIsValidValue);
-  const { isusrname, ispassword } = isValid;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const validationMessageCSS = { color: "red", marginBottom: "10px" };
+
+
+  var flag=true;
+  const validateDetailsFlag = Object.values(formData).every(value => {
+      if ( value === '') {
+          flag=false;
+      }
+      return flag;
+  });
 
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(signin(formData, navigate));
+    if(validateDetailsFlag) {
+      dispatch(signin(formData, navigate));
+      toast.success('Login Successfull.')
+    }
+
+    else {
+      alert('Invalid Input.')
+    }
   };
 
   const handleChange = (e, regEx) => {
     const RegExObj = new RegExp(regEx);
-    const isValidKey = "is" + e.target.name;
 
     if (e.target.value === "" || RegExObj.test(e.target.value)) {
-      setIsValid({ ...isValid, [isValidKey]: "" });
+
+      setValidateForm({...validateForm, [e.target.name]: false})
       setFormData({ ...formData, [e.target.name]: e.target.value });
     } else {
-      switch (e.target.name) {
-        case "usrname":
-          setIsValid({
-            ...isValid,
-            [isValidKey]: "Minimum 5 characters. Maximum 15 characters.",
-          });
-          break;
-
-        case "password":
-          setIsValid({
-            ...isValid,
-            [isValidKey]:
-              "Minimum 8 characters. Maximum 16 characters. password should contain at least one number and one special character",
-          });
-          break;
-
-        default:
-          break;
-      }
+      setValidateForm({...validateForm, [e.target.name]: true})
     }
   };
 
@@ -118,7 +116,7 @@ export default function SignInSide() {
             <Avatar sx={{ m: 1, bgcolor: "#6C63FF" }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
+            <Typography component="h1" variant="h5" sx={{ mb: 3}}>
               Sign in
             </Typography>
             <Box
@@ -138,10 +136,12 @@ export default function SignInSide() {
                   name="usrname"
                   autoComplete="usrname"
                   autoFocus
+                  error={validateForm.usrname}
+                  helperText={validateForm.usrname ? "Username must contain alphanumeric character." : ""}
                   onChange={(e) => onChangeSetState(e)}
                   onBlur={(e) => handleChange(e, validUsername)}
                 />
-                <div style={validationMessageCSS}>{isusrname}</div>
+
                 <TextField
                   margin="normal"
                   required
@@ -151,14 +151,17 @@ export default function SignInSide() {
                   label="Password"
                   type="password"
                   id="password"
+                  error={validateForm.password}
+                  helperText={validateForm.password ? "password must contain one number and one special characters." : ""}
                   autoComplete="current-password"
                   onChange={(e) => onChangeSetState(e)}
                   onBlur={(e) => handleChange(e, validPassword)}
                 />
-                <div style={validationMessageCSS}>{ispassword}</div>
+            
                 <Button
                   type="submit"
                   fullWidth
+                  disabled={!validateDetailsFlag}
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                   style={{ backgroundColor: "#6C63FF" }}
@@ -181,6 +184,8 @@ export default function SignInSide() {
             </Box>
           </Box>
         </Grid>
+        <ToastContainer
+        autoClose={5000} />
       </Grid>
     </ThemeProvider>
   );

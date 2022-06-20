@@ -4,6 +4,7 @@ import decode from 'jwt-decode'
 import { AppBar, Avatar, Button, Toolbar, Typography } from "@mui/material";
 import { HiTicket } from "react-icons/hi";
 import { useDispatch } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 
 import useStyles from "./styles";
 
@@ -13,14 +14,15 @@ const Navbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const location = useLocation();
+
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const logout = () => {
     dispatch({ type: "LOGOUT" });
-
+    
     navigate("/");
-
+    toast.success('Logout Successfull.')
+    
     setUser(null);
   };
 
@@ -36,47 +38,50 @@ const Navbar = () => {
   },[userToken.token, logout])
 
   return (
-    <AppBar
-      className={classes.appBar}
-      position="static"
-      color="inherit"
-      style={{ flexDirection: "row" }}
-    >
-      <div className={classes.brandContainer}>
-        <Typography
-          className={classes.heading}
-          variant="h2"
-          align="center"
-        >
-          Tickets <HiTicket className={classes.icon} />
-        </Typography>
-      </div>
-
-      <Toolbar className={classes.toolbar}>
-        {
-          <div className={classes.profile}>
-            <Avatar
-              alt={user?.name}
-              src={user?.imageURL}
-              sx={{ backgroundColor: "#6C63FF" }}
-            >
-              {user?.usrname.charAt(0).toUpperCase()}
-            </Avatar>
-            <Typography className={classes.userName} variant="h6">
-              {user?.usrname}
-            </Typography>
-            <Button
-              className={classes.logout}
-              variant="contained"
-              onClick={logout}
-              style={{ backgroundColor: "#6C63FF" }}
-            >
-              Logout
-            </Button>
-          </div>
-        }
-      </Toolbar>
-    </AppBar>
+    <div>
+      <AppBar
+        className={classes.appBar}
+        position="static"
+        color="inherit"
+        style={{ flexDirection: "row" }}
+      >
+        <div className={classes.brandContainer}>
+          <Typography
+            className={classes.heading}
+            variant="h2"
+            align="center"
+          >
+            Tickets <HiTicket className={classes.icon} />
+          </Typography>
+        </div>
+        <Toolbar className={classes.toolbar}>
+          {
+            <div className={classes.profile}>
+              <Avatar
+                alt={user?.name}
+                src={user?.imageURL}
+                sx={{ backgroundColor: "#6C63FF" }}
+              >
+                {user?.usrname.charAt(0).toUpperCase()}
+              </Avatar>
+              <Typography className={classes.userName} variant="h6">
+                {user?.usrname}
+              </Typography>
+              <Button
+                className={classes.logout}
+                variant="contained"
+                onClick={logout}
+                style={{ backgroundColor: "#6C63FF" }}
+              >
+                Logout
+              </Button>
+            </div>
+          }
+        </Toolbar>
+      </AppBar>
+        <ToastContainer
+        autoClose={3000} />
+    </div>
   );
 };
 
