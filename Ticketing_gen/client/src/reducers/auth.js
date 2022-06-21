@@ -8,6 +8,15 @@ const authReducer = (state = { authData: null}, action) => {
             localStorage.clear();
 
             return {...state, authData: null};
+        
+        case 'USER_LOGIN_FAILED': 
+            return {
+                error: action.payload
+            }
+        case 'USER_SIGNUP_FAILED': 
+            return {
+                error: action.payload
+            }
         default: 
             return state;
     }

@@ -40,6 +40,7 @@ export const Dashboard = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     dispatch(createTicket(ticketData));
     setTicketData({ ...ticketData, emp_id: "", ticket_desc: "" });
     toast.success('Ticket Created.')
@@ -49,10 +50,11 @@ export const Dashboard = () => {
   useEffect(() => {
     if (!user || !token) {
       localStorage.clear();
-      navigate("/");
-
+      navigate("/");  
     }
-    dispatch(getTickets());
+    else {
+      dispatch(getTickets());
+    }
   }, [dispatch, user, navigate, token]);
 
   return (
@@ -65,6 +67,7 @@ export const Dashboard = () => {
               <Button
                 variant="contained"
                 onClick={handleOpen}
+                type="button"
                 style={{ backgroundColor: "#6C63FF" }}
               >
                 Add Ticket
@@ -107,7 +110,7 @@ export const Dashboard = () => {
               </DialogContent>
               <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleSubmit}>Submit</Button>
+                <Button type="submit" onClick={handleSubmit}>Submit</Button>
               </DialogActions>
             </Dialog>
 
@@ -116,9 +119,9 @@ export const Dashboard = () => {
             </Grid>
           </Container>
         </Grow>
-        <ToastContainer
-        autoClose={2000} />
       </Container>
+      <ToastContainer
+        autoClose={2000} />
     </ThemeProvider>
   );
 };

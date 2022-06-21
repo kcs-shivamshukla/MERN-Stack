@@ -8,7 +8,7 @@ export const signin = (formData, navigate) => async(dispatch) => {
 
         navigate('/Dashboard');
     } catch (error) {
-        console.log(error)
+        dispatch({type: 'USER_LOGIN_FAILED', payload: error.response.data})
     }
 }
 
@@ -21,6 +21,6 @@ export const signup = (formData, navigate) => async(dispatch) => {
 
         navigate('/Dashboard');
     } catch (error) {
-        console.log(error.response);
+        dispatch({type: 'USER_SIGNUP_FAILED', payload: error.response.data})
     }
 }

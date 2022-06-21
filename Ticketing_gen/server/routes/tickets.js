@@ -10,7 +10,7 @@ const {
 
 const router = Router();
 
-router.get("/", getTickets);
+router.get("/",auth, getTickets);
 router.post("/",auth, createTicket);
 router.put("/:id",auth, updateTicket);
 router.post("/delete/:id",auth, deleteTicket);

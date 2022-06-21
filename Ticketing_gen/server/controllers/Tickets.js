@@ -19,7 +19,7 @@ const updateTicket = async (req, res) => {
   const ticket = req.body;
 
 
-  if (!_id) return res.status(404).send("No post with that id.");
+  if (!_id) return res.staFtus(404).send("No post with that id.");
 
   const updatedTicket = await TicketMessage.findByIdAndUpdate(
     _id,

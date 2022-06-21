@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,8 +13,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import heroimg from '../../images/hero3.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import { signup } from '../../actions/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { validName, validUsername, validPassword } from '../../regex/regex'
+import { ToastContainer, toast } from 'react-toastify';
 
 const initialState = {firstName: '', lastName: '', usrname: '', password: ''}
 const initialFormValidateValue = { firstName: false, lastName: false, usrname: false, password: false}
@@ -23,11 +24,23 @@ const theme = createTheme();
 
 export default function Register() {
 
+  const userErrorDetails = useSelector(store => store.authReducer.error);
+
   const [formData, setFormData] = useState(initialState);
   const [validateForm, setValidateForm] = useState(initialFormValidateValue);
+  const userError = userErrorDetails;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if(userError !== undefined) {
+      toast.error(userError.message)
+      setTimeout(() => {
+        dispatch({type: "USER_SIGNUP_FAILED", payload: ""})
+      }, 5000)
+    }
+  })
 
   var flag=true;
   const validateDetailsFlag = Object.values(formData).every(value => {
@@ -193,6 +206,7 @@ export default function Register() {
         </Box>
         </Grid>
       </Grid>
+      <ToastContainer />
     </ThemeProvider>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -11,7 +11,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -19,24 +19,42 @@ import heroimg from "../../images/login.svg";
 import { signin } from "../../actions/auth";
 import { validPassword, validUsername } from "../../regex/regex";
 
+
 const initialState = { usrname: "", password: "" };
 const initialFormValidateValue = { firstName: false, lastName: false, usrname: false, password: false}
 
 const theme = createTheme();
 
 export default function SignInSide() {
+
+  
+  const userErrorDetails = useSelector(store => store.authReducer.error);
+
   const [formData, setFormData] = useState(initialState);
   const [validateForm, setValidateForm] = useState(initialFormValidateValue);
+  const userError = userErrorDetails;
 
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
 
+  useEffect(() => {
+  
+    if(userError !== undefined) {
+      toast.error(userError.message);
+      setTimeout(() => {
+        dispatch({type: 'USER_LOGIN_FAILED', payload: ""})
+      }, 5000)
+    }
+  },[userError, dispatch])
+
+
+
 
   var flag=true;
   const validateDetailsFlag = Object.values(formData).every(value => {
-      if ( value === '') {
+      if ( value === '' || validateForm.firstName || validateForm.lastName || validateForm.usrname || validateForm.password ) {
           flag=false;
       }
       return flag;
@@ -48,7 +66,6 @@ export default function SignInSide() {
     event.preventDefault();
     if(validateDetailsFlag) {
       dispatch(signin(formData, navigate));
-      toast.success('Login Successfull.')
     }
 
     else {
@@ -86,10 +103,6 @@ export default function SignInSide() {
           sx={{
             backgroundImage: `url(${heroimg})`,
             backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
             backgroundSize: "contain",
             backgroundPosition: "center",
           }}
