@@ -4,7 +4,6 @@ import decode from 'jwt-decode'
 import { AppBar, Avatar, Button, Toolbar, Typography } from "@mui/material";
 import { HiTicket } from "react-icons/hi";
 import { useDispatch } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
 
 import useStyles from "./styles";
 
@@ -21,7 +20,6 @@ const Navbar = () => {
     dispatch({ type: "LOGOUT" });
     
     navigate("/");
-    toast.success('Logout Successfull.')
     
     setUser(null);
   };
@@ -79,8 +77,6 @@ const Navbar = () => {
           }
         </Toolbar>
       </AppBar>
-        <ToastContainer
-        autoClose={3000} />
     </div>
   );
 };
