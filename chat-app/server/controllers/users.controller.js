@@ -36,7 +36,7 @@ const signin = async (req, res) => {
 
 
 const signup = async (req, res) => {
-    const { firstName, lastName, email, password } = req.body;
+    const { fullName, email, password } = req.body;
 
     try {
         const existingUser = await User.findOne({ email });
@@ -46,8 +46,7 @@ const signup = async (req, res) => {
 
             const result = await User.create({
                 email: email,
-                firstName: firstName,
-                lastName: lastName,
+                fullName: fullName,
                 password: hashedPassword,
             });
 

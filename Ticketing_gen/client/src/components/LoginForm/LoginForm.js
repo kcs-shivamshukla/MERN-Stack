@@ -116,7 +116,7 @@ export default function SignInSide() {
           elevation={6}
           square
           style={{ boxShadow: "none" }}
-        >
+         >
           <Box
             sx={{
               my: 8,
@@ -125,7 +125,7 @@ export default function SignInSide() {
               flexDirection: "column",
               alignItems: "center",
             }}
-          >
+           >
             <Avatar sx={{ m: 1, bgcolor: "#6C63FF" }}>
               <LockOutlinedIcon />
             </Avatar>
@@ -137,7 +137,7 @@ export default function SignInSide() {
               noValidate
               onSubmit={handleSubmit}
               sx={{ padding: "0 50px", mt: 1 }}
-            >
+             >
               <Grid container>
                 <TextField
                   margin="normal"
