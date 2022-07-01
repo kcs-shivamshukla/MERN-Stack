@@ -21,13 +21,13 @@ import { validPassword, validUsername } from "../../regex/regex";
 
 
 const initialState = { usrname: "", password: "" };
-const initialFormValidateValue = { firstName: false, lastName: false, usrname: false, password: false}
+const initialFormValidateValue = { firstName: false, lastName: false, usrname: false, password: false }
 
 const theme = createTheme();
 
 export default function SignInSide() {
 
-  
+
   const userErrorDetails = useSelector(store => store.authReducer.error);
 
   const [formData, setFormData] = useState(initialState);
@@ -40,31 +40,31 @@ export default function SignInSide() {
 
 
   useEffect(() => {
-  
-    if(userError !== undefined) {
+
+    if (userError !== undefined) {
       toast.error(userError.message);
       setTimeout(() => {
-        dispatch({type: 'USER_LOGIN_FAILED', payload: ""})
+        dispatch({ type: 'USER_LOGIN_FAILED', payload: "" })
       }, 5000)
     }
-  },[userError, dispatch])
+  }, [userError, dispatch])
 
 
 
 
-  var flag=true;
+  var flag = true;
   const validateDetailsFlag = Object.values(formData).every(value => {
-      if ( value === '' || validateForm.firstName || validateForm.lastName || validateForm.usrname || validateForm.password ) {
-          flag=false;
-      }
-      return flag;
+    if (value === '' || validateForm.firstName || validateForm.lastName || validateForm.usrname || validateForm.password) {
+      flag = false;
+    }
+    return flag;
   });
 
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if(validateDetailsFlag) {
+    if (validateDetailsFlag) {
       dispatch(signin(formData, navigate));
     }
 
@@ -78,10 +78,10 @@ export default function SignInSide() {
 
     if (e.target.value === "" || RegExObj.test(e.target.value)) {
 
-      setValidateForm({...validateForm, [e.target.name]: false})
+      setValidateForm({ ...validateForm, [e.target.name]: false })
       setFormData({ ...formData, [e.target.name]: e.target.value });
     } else {
-      setValidateForm({...validateForm, [e.target.name]: true})
+      setValidateForm({ ...validateForm, [e.target.name]: true })
     }
   };
 
@@ -116,7 +116,7 @@ export default function SignInSide() {
           elevation={6}
           square
           style={{ boxShadow: "none" }}
-         >
+        >
           <Box
             sx={{
               my: 8,
@@ -125,11 +125,11 @@ export default function SignInSide() {
               flexDirection: "column",
               alignItems: "center",
             }}
-           >
+          >
             <Avatar sx={{ m: 1, bgcolor: "#6C63FF" }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5" sx={{ mb: 3}}>
+            <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
               Sign in
             </Typography>
             <Box
@@ -137,7 +137,7 @@ export default function SignInSide() {
               noValidate
               onSubmit={handleSubmit}
               sx={{ padding: "0 50px", mt: 1 }}
-             >
+            >
               <Grid container>
                 <TextField
                   margin="normal"
@@ -150,7 +150,7 @@ export default function SignInSide() {
                   autoComplete="usrname"
                   autoFocus
                   error={validateForm.usrname}
-                  helperText={validateForm.usrname ? "Username must contain alphanumeric character." : ""}
+                  helperText={validateForm.usrname ? "Username must contain alphanumeric values." : ""}
                   onChange={(e) => onChangeSetState(e)}
                   onBlur={(e) => handleChange(e, validUsername)}
                 />
@@ -170,7 +170,7 @@ export default function SignInSide() {
                   onChange={(e) => onChangeSetState(e)}
                   onBlur={(e) => handleChange(e, validPassword)}
                 />
-            
+
                 <Button
                   type="submit"
                   fullWidth
@@ -198,7 +198,7 @@ export default function SignInSide() {
           </Box>
         </Grid>
         <ToastContainer
-        autoClose={5000} />
+          autoClose={5000} />
       </Grid>
     </ThemeProvider>
   );

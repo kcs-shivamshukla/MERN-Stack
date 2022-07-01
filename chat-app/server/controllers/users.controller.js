@@ -22,9 +22,9 @@ const signin = async (req, res) => {
         }
 
         const token = jwt.sign(
-            {email: existingUser.email, id: existingUser._id},
+            { email: existingUser.email, id: existingUser._id },
             process.env.SECRET,
-            {expiresIn: "1h"}
+            { expiresIn: "1h" }
         )
         console.log(existingUser);
         res.status(200).json({ result: existingUser, token })
@@ -50,7 +50,12 @@ const signup = async (req, res) => {
                 password: hashedPassword,
             });
 
-            return res.status(200).json({ result });
+            const token = jwt.sign(
+                { email: result.email, id: result._id },
+                process.env.SECRET,
+                { expiresIn: "1h" }
+            )
+            return res.status(200).json({ result, token });
         }
         else {
             return res.status(400).json({ message: "User Already Exists." })

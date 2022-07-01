@@ -18,19 +18,19 @@ const BASE_URL = process.env.BASE_URL;
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:3000'
+    origin: 'http://localhost:3001'
 }
 ));
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 
 app.use("/chats", chatRoutes);
 app.use("/users", userRoutes);
 
 const server = () => {
     try {
-        app.listen(PORT, () =>  console.log(`✅ Server listening on port: ${BASE_URL}${PORT}`));
+        app.listen(PORT, () => console.log(`✅ Server listening on port: ${BASE_URL}${PORT}`));
     } catch (error) {
         console.log(error);
     }
