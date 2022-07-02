@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Button, Box, Typography, Grid, Avatar, TextField, CssBaseline, Paper } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import './styles.css';
 import { validName, validEmail, validPassword } from '../../constants/Regex';
@@ -46,7 +48,7 @@ export default function Signup() {
       });
       navigate("/dashboard")
      } catch (error: any) {
-      console.log(error.response.data.message)
+      toast.error(error.response.data.message,{autoClose: 5000})
      }
     }
   }
@@ -189,7 +191,8 @@ export default function Signup() {
         </Box>
       </Grid>
 
-
+     <ToastContainer 
+      position='top-left'/>
     </Grid>
   )
 }

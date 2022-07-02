@@ -18,7 +18,7 @@ const BASE_URL = process.env.BASE_URL;
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:3001'
+    origin: 'http://localhost:3000'
 }
 ));
 
