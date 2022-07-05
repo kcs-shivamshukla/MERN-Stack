@@ -1,0 +1,37 @@
+.sideBar {
+    &__container {
+        height: 100vh;
+
+        &--bg {
+            background: rgba(255, 255, 255, 0.45);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.225);
+        }
+    }
+
+    &__text {
+        color: #c3c6cf;
+        margin-bottom: .05rem;
+
+        &--primary {
+            margin-block: 0;
+            margin-bottom: .25rem;
+            font-size: 1.25rem;
+        }
+
+        &--secondary {
+            margin-block: 0;
+            font-size: .75rem;
+        }
+    }
+
+    &__icons {
+        margin: 0 10px;
+    }
+
+    &__img {
+        height: 50px;
+        width: 50px;
+    }
+}

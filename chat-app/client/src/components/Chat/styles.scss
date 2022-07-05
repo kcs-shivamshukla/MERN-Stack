@@ -1,0 +1,71 @@
+.chat {
+
+    // User Details
+    &__userDetailsContainer {
+        max-height: 20vh;
+    }
+
+    &__userDetails {
+        &--name {
+            font-size: 1.5rem;
+            margin-bottom: .08rem;
+        }
+
+        &--status {
+            color: green;
+            margin-bottom: .08rem;
+        }
+    }
+
+    &__userImg {
+        width: 60px;
+        height: 60px;
+    }
+
+    &__userStatus {
+        color: #c3c6cf;
+        margin-bottom: 0;
+
+        &--green {
+         background-color: rgba(0, 128, 0, 0.099);
+         height: 10px;
+         width: 10px;
+         border-radius: 50%;  
+        }
+    }
+
+    //Chat Details
+
+    &__detailsContainer {
+       
+        max-height: 90vh;
+        height: 83vh;
+    }
+
+    //Chat input
+
+    &__inputContainer {
+        max-height: 10vh;
+        background-color: #c3c6cf;
+        border-bottom-left-radius: .25rem;
+        border-bottom-right-radius: .25rem;
+
+    }
+
+    &__input {
+        width: 100%;
+        padding: 12px 8px;
+        border: 0;
+        background-color: #c3c6cf;
+        border-bottom-left-radius: .25rem;
+        border-bottom-right-radius: .25rem;
+        max-height: 10vh;
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__sendBtn {
+        float: right;
+    }
+}

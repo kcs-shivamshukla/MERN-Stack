@@ -46,7 +46,7 @@ export default function Signup() {
         email: '',
         password: ''
       });
-      navigate("/dashboard")
+      navigate("/")
      } catch (error: any) {
       toast.error(error.response.data.message,{autoClose: 5000})
      }
@@ -180,7 +180,7 @@ export default function Signup() {
 
               <Grid container justifyContent="center">
                 <Grid item>
-                  <Link to="/" style={{ color: '#212112', textDecoration: 'none' }}>
+                  <Link to="/login" style={{ color: '#212112', textDecoration: 'none' }}>
                     Already have an account? Sign in
                   </Link>
                 </Grid>

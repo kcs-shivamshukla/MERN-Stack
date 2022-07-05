@@ -26,9 +26,9 @@ export default function Login() {
   const [formData, setFormData] = useState(defaultFormData);
   const [validateForm, setValidateForm] = useState(defaultValidateFormValues)
 
-  //Navigate Hook
+  //Hook Objects
   const navigate = useNavigate();
-
+  
   //Form Action Functions
   const onSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,7 +42,7 @@ export default function Login() {
           email: '',
           password: ''
         });
-        navigate('/dashboard');
+        navigate('/');
       } catch (error: any) { 
         toast.error(error.response.data.message);
       }

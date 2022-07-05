@@ -26,6 +26,7 @@ const signin = async (req, res) => {
             process.env.SECRET,
             { expiresIn: "1h" }
         )
+        delete existingUser.fullName;
         console.log(existingUser);
         res.status(200).json({ result: existingUser, token })
     } catch (error) {
@@ -66,4 +67,19 @@ const signup = async (req, res) => {
     }
 }
 
-module.exports = { signin, signup }
+const getUsers = async (req, res) => {
+
+    try {
+        const users = await User.find({ _id: { $ne: req.params._id } }).select([
+            "fullName",
+            "email"
+        ]);
+        console.log(users);
+        return res.json(users);
+    }
+    catch (error) {
+        console.log(error);
+        res.status(404).json({ message: 'Users not found.' })
+    }
+}
+module.exports = { signin, signup, getUsers }
