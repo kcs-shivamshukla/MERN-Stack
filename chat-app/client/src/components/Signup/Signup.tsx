@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Box, Typography, Grid, Avatar, TextField, CssBaseline, Paper } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import './styles.css';
+import './styles.scss';
 import { validName, validEmail, validPassword } from '../../constants/Regex';
 import { signup } from '../../api';
 
@@ -30,6 +30,13 @@ export default function Signup() {
 
   //Navigate Hook
   const navigate = useNavigate();
+
+  //Use Effect 
+  useEffect(() => {
+    if(localStorage.getItem("profile")) {
+      navigate("/login")
+    }
+  },[navigate])
 
   //Form Action Functions
   const onSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
@@ -120,7 +127,7 @@ export default function Signup() {
           </Typography>
 
           <Box
-            component="form"
+            component="form" 
             onSubmit={onSubmit}
             style={{
               width: '25%'

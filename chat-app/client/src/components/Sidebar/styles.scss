@@ -13,10 +13,12 @@
     &__text {
         color: #c3c6cf;
         margin-bottom: .05rem;
+        margin-left: 1rem;
 
         &--primary {
             margin-block: 0;
             margin-bottom: .25rem;
+            margin-top: .2rem;
             font-size: 1.25rem;
         }
 
@@ -33,5 +35,24 @@
     &__img {
         height: 50px;
         width: 50px;
+    }
+    &__btn {
+        border: none;
+        outline: none;
+        background-color: #fff;
+        padding: 0;
+    }
+
+    &__usersList {
+
+
+        &::-webkit-scrollbar {
+            width: .2rem;
+            
+            &-thumb {
+                background-color: #c3c6cf;
+                border-radius: .5rem;
+            }
+        }
     }
 }

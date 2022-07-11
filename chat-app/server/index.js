@@ -13,7 +13,6 @@ dotenv.config();
 
 //Dotenv Constants
 const PORT = process.env.PORT;
-const BASE_URL = process.env.BASE_URL;
 
 const app = express();
 
@@ -23,17 +22,18 @@ app.use(cors({
 ));
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true })) //x-www-form
 
 app.use("/chats", chatRoutes);
 app.use("/users", userRoutes);
 
 const server = () => {
     try {
-        app.listen(PORT, () => console.log(`✅ Server listening on port: ${BASE_URL}${PORT}`));
+        connectDB().then(
+            app.listen(PORT, () => console.log(`✅ Server listening on port ${PORT}`))
+        );
     } catch (error) {
         console.log(error);
     }
 }
 server();
-connectDB();
