@@ -1,10 +1,11 @@
 const { Router } = require('express');
 
+const { addChat, getAllChats } = require("../controllers/chats.controller.js")
+
 const router = Router();
 
 
-router.get('/', (req, res) => {
-    res.send("<h1>Something</h1>")
-});
+router.post('/addchat', addChat);
+router.get('/getallchats', getAllChats);
 
 module.exports = router;
