@@ -4,7 +4,7 @@ import { Chat, User } from "../../constants/interface";
 
 interface ChatContentProps {
   chats: Chat[];
-  loggedUser: User
+  loggedUser: User;
 }
 
 export default function ChatContent(props: ChatContentProps) {
@@ -20,15 +20,14 @@ export default function ChatContent(props: ChatContentProps) {
           {chats &&
             chats.map((chat, index) => {
               return (
-                <div className={ `d-flex align-items-center justify-content-${ loggedUser._id === chat.sender ? "end" : "start"}` }>
-                  <p
-                  className={'chat__content'}
+                <div
+                  className={`d-flex align-items-center justify-content-${
+                    loggedUser._id === chat.sender ? "end" : "start"
+                  }`}
                   key={index}
                 >
-                  {chat.chat}
-                </p>
+                  <p className={"chat__content"}>{chat.chat}</p>
                 </div>
-                
               );
             })}
         </div>

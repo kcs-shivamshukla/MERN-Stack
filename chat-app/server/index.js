@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const cors = require('cors')
+const cors = require('cors');
+// const socket = require('socket.io');
 
 //Database import
 const connectDB = require('./db/db.js')
@@ -36,4 +37,27 @@ const server = () => {
         console.log(error);
     }
 }
+
 server();
+
+// const io = socket(server, {
+//     cors: {
+//         origin: 'http://localhost:3000',
+//         credentials: true
+//     }
+// });
+
+// global.usersOnline = new Map();
+
+// io.on("connection", (socket) => {
+//     socket.on("addUser", (userId) => {
+//         usersOnline.set(userId, socket.id);
+//     })
+
+//     socket.on("sendChat", (data) => {
+//         const sendSocket = usersOnline.get(data.to);
+//         if (sendSocket) {
+//             socket.to(sendSocket).emit("chat recieved", data.chat);
+//         }
+//     });
+// })
