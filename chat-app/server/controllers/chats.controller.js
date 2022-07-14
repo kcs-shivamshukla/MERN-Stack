@@ -5,14 +5,14 @@ const addChat = async (req, res) => {
     try {
         console.log(req.body);
         const { chat, from, to } = req.body;
-        const data = await ChatModel.create({
-            chat: { message: chat },
+        const chats = await ChatModel.create({
+            chat: chat,
             sender: from,
-            reciever: to
+            reciever: to,
         });
 
-        if (data) {
-            console.log(data);
+        if (chats) {
+            console.log(chats);
             return res.json({ message: "Chat sent successfully." })
         }
 
@@ -22,8 +22,19 @@ const addChat = async (req, res) => {
     }
 }
 
-const getAllChats = () => {
+const getAllChats = async (req, res) => {
+    try {
+        const { from: sender, to: reciever } = req.body;
 
+        const chats = await ChatModel.find({
+            sender, reciever
+        }).sort({ createdAt: 1 }).lean();
+
+        return res.json(chats);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Chats not found." })
+    }
 }
 
 module.exports = { addChat, getAllChats }

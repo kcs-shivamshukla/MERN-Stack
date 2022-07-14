@@ -34,7 +34,7 @@ export default function Signup() {
   //Use Effect 
   useEffect(() => {
     if(localStorage.getItem("profile")) {
-      navigate("/login")
+      navigate("/")
     }
   },[navigate])
 
@@ -187,7 +187,7 @@ export default function Signup() {
 
               <Grid container justifyContent="center">
                 <Grid item>
-                  <Link to="/login" style={{ color: '#212112', textDecoration: 'none' }}>
+                  <Link to="/" style={{ color: '#212112', textDecoration: 'none' }}>
                     Already have an account? Sign in
                   </Link>
                 </Grid>

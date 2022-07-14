@@ -71,12 +71,10 @@ const getUsers = async (req, res) => {
 
     try {
 
-        const users = await User.find({ _id: { $ne: req.params._id } }).select([
+        const users = await User.find().select([
             "fullName",
             "email"
         ]);
-        console.log(users);
-        console.log(users.length);
         return res.json(users);
     }
     catch (error) {

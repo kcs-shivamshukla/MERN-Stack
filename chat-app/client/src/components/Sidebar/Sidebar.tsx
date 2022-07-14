@@ -8,13 +8,14 @@ import { User } from '../../constants/interface';
 interface SidebarProps {
   users: User[],
   activeChat(data:object): void,
-  profile: User
+  loggedUser: User
 }
 
 
 function Sidebar(props:SidebarProps) {
-  const { users, activeChat, profile } = props
+  const { users, activeChat, loggedUser } = props
  
+  const usersList = users.filter((user) => user._id !== loggedUser._id)
 
   const handleActiveChat = (user: object) => {
     activeChat(user)
@@ -27,7 +28,7 @@ function Sidebar(props:SidebarProps) {
       <div className='sideBar__container sideBar__container--bg'>
         <Row className='d-flex justify-content-between align-items-center sideBar__header'>
           {/* <Image src={process.env.PUBLIC_URL + '/images/Multiavatar-ETH.png'} className='sideBar__img ml-2' rounded /> */}
-          <h2>{profile.fullName}</h2>
+          <h2>{loggedUser.fullName}</h2>
           <div>
             <button onClick={() => alert('Chats')} className='sideBar__btn '>
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#c3c6cf" className="bi bi-chat-left-text-fill sideBar__icons" viewBox="0 0 16 16">
@@ -50,7 +51,7 @@ function Sidebar(props:SidebarProps) {
         </Row>
 
         <div className='sideBar__usersList pb-5'>
-        {users && users.map((user, index) => {
+        {usersList && usersList.map((user, index) => {
           return <Row style={{ cursor: 'pointer' }} className='mt-4 position-relative' key={index} onClick = {() => handleActiveChat(user)}>
               <Col md={2} className='pl-3'>
                 <Image src={process.env.PUBLIC_URL + '/images/Multiavatar-ETH.png'} className='sideBar__img' rounded />

@@ -37,11 +37,16 @@
     //Chat Details
 
     &__detailsContainer {
-       
         max-height: 90vh;
         height: 83vh;
+        overflow-y: auto;
     }
 
+    &__content {
+        background-color: #c3c6cf;
+        padding: .8rem;
+        border-radius: .5rem;
+    }
     //Chat input
 
     &__inputContainer {

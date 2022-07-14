@@ -3,10 +3,8 @@ const mongoose = require('mongoose');
 const chatSchema = mongoose.Schema(
     {
         chat: {
-            message: {
-                type: String,
-                required: true
-            }
+            type: String,
+            required: true
         },
         sender: {
             type: mongoose.Schema.Types.ObjectId,

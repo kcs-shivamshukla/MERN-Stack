@@ -1,16 +1,38 @@
-import React from 'react';
-import { Row, Col } from 'react-bootstrap'
+import React from "react";
+import { Row, Col } from "react-bootstrap";
+import { Chat, User } from "../../constants/interface";
 
-export default function ChatContent() {
-    return(
-        <Row className='chat__detailsContainer'>
-        <Col>
+interface ChatContentProps {
+  chats: Chat[];
+  loggedUser: User
+}
 
+export default function ChatContent(props: ChatContentProps) {
+  const { chats, loggedUser } = props;
 
-          <div style={{ height: '100%' }} className='d-flex flex-column justify-content-end'>
-            <p>Some1</p>
-          </div>
-        </Col>
-      </Row>
-    )
+  return (
+    <Row className="chat__detailsContainer">
+      <Col>
+        <div
+          style={{ height: "100%" }}
+          className="d-flex flex-column justify-content-end"
+        >
+          {chats &&
+            chats.map((chat, index) => {
+              return (
+                <div className={ `d-flex align-items-center justify-content-${ loggedUser._id === chat.sender ? "end" : "start"}` }>
+                  <p
+                  className={'chat__content'}
+                  key={index}
+                >
+                  {chat.chat}
+                </p>
+                </div>
+                
+              );
+            })}
+        </div>
+      </Col>
+    </Row>
+  );
 }

@@ -6,6 +6,6 @@ const router = Router();
 
 
 router.post('/addchat', addChat);
-router.get('/getallchats', getAllChats);
+router.post('/getallchats', getAllChats);
 
 module.exports = router;

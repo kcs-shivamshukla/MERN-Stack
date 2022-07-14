@@ -24,7 +24,7 @@ export default function Dashboard() {
   }
   const localStorageValue = localStorage.getItem("profile");
   if (typeof localStorageValue === 'string') {
-    var profile = JSON.parse(localStorageValue).result;
+    var loggedUser = JSON.parse(localStorageValue).result;
   }
 
   //Use Effect 
@@ -33,7 +33,7 @@ export default function Dashboard() {
       getAllUsers();
     }
     else {
-      navigate("/login")
+      navigate("/")
     }
   }, [localStorageValue, navigate])
 
@@ -49,12 +49,12 @@ export default function Dashboard() {
     <Container fluid>
       <Row style={{ maxHeight: '100vh' }}>
         <Col md={3} className='py-4 px-3'>
-          <Sidebar users={users} activeChat={handleActiveChatChange} profile={profile}/>
+          <Sidebar users={users} activeChat={handleActiveChatChange} loggedUser={loggedUser}/>
         </Col>
         <Col md={9} className='px-4'>
         {activeChat === undefined ? 
           <Welcome /> :
-          <Chat activeChat = {activeChat} profile={profile}/>  
+          <Chat activeChat = {activeChat} loggedUser={loggedUser}/>  
         }
         </Col>
       </Row>

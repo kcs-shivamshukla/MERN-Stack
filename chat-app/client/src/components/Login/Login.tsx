@@ -32,7 +32,7 @@ export default function Login() {
   //Use Effect 
   useEffect(() => {
     if (!localStorage.getItem("profile")) {
-      navigate('/login')
+      navigate('/')
     } 
   },[navigate])
 
@@ -49,7 +49,7 @@ export default function Login() {
           email: '',
           password: ''
         });
-        navigate('/');
+        navigate('/dashboard');
       } catch (error: any) {
         toast.error(error.response.data.message);
       }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Image } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,33 +6,48 @@ import './styles.scss';
 import { User } from '../../constants/interface';
 import ChatInput from './ChatInput';
 import ChatContent from './ChatContent';
-import {sendChat} from '../../api/index';
+import {sendChat, getAllChats} from '../../api/index';
 
 interface ChatProps {
   activeChat: User,
-  profile: User
+  loggedUser: User
 }
 
 
 export default function Chat(props: ChatProps) {
 
-  const { activeChat, profile } = props
+  const { activeChat, loggedUser } = props
   const navigate = useNavigate();
+
+  const [chats, setChats] = useState([]);
+
+  useEffect(() => {
+    const allChats = async() => {
+      const chatDetails = {
+        from: loggedUser._id,
+        to: activeChat._id
+      }
+      const { data } = await getAllChats(chatDetails);
+      console.log(data);
+      setChats(data)
+    }
+    allChats();
+  },[activeChat._id, loggedUser._id])
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate('/login')
+    navigate('/')
   }
 
   const handleChat = async (chatMsg: string) => {
    try {
     const chatContent = {
-       from : profile._id,
+       from : loggedUser._id,
        to :activeChat._id,
        chat: chatMsg
     }
-    const { data } = await sendChat(chatContent)
-    alert(JSON.stringify(data));
+    const { data } = await sendChat(chatContent);
+    alert(JSON.stringify(data.message));
    }
    catch(error) {
     console.log(error)
@@ -53,7 +68,7 @@ export default function Chat(props: ChatProps) {
         </div>
         <div className='chat__userOptions d-flex align-items-center'>
           <div className='mx-2 chat__userOptions--name'>
-            {profile.fullName.charAt(0)}
+            {loggedUser.fullName.charAt(0)}
           </div>
 
           <button className='chat__btn mx-2' onClick={handleLogout}>
@@ -65,7 +80,7 @@ export default function Chat(props: ChatProps) {
         </div>
 
       </Row>
-      <ChatContent />
+      <ChatContent chats = {chats} loggedUser = {loggedUser}/>
       
       <ChatInput handleChat={handleChat}/>
     </div>
