@@ -24,8 +24,8 @@ export default function Chat(props: ChatProps) {
   useEffect(() => {
     const allChats = async() => {
       const chatDetails = {
-        from: loggedUser._id,
-        to: activeChat._id
+        sender: loggedUser._id,
+        reciever: activeChat._id
       }
       const { data } = await getAllChats(chatDetails);
       console.log(data);
@@ -42,8 +42,8 @@ export default function Chat(props: ChatProps) {
   const handleChat = async (chatMsg: string) => {
    try {
     const chatContent = {
-       from : loggedUser._id,
-       to :activeChat._id,
+       sender : loggedUser._id,
+       reciever :activeChat._id,
        chat: chatMsg
     }
     const { data } = await sendChat(chatContent);
@@ -68,7 +68,7 @@ export default function Chat(props: ChatProps) {
         </div>
         <div className='chat__userOptions d-flex align-items-center'>
           <div className='mx-2 chat__userOptions--name'>
-            {loggedUser.fullName.charAt(0)}
+            {loggedUser?.fullName?.charAt(0)}
           </div>
 
           <button className='chat__btn mx-2' onClick={handleLogout}>

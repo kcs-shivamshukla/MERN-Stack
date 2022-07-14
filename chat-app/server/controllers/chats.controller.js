@@ -4,11 +4,11 @@ const addChat = async (req, res) => {
 
     try {
         console.log(req.body);
-        const { chat, from, to } = req.body;
+        const { chat, sender, reciever } = req.body;
         const chats = await ChatModel.create({
             chat: chat,
-            sender: from,
-            reciever: to,
+            sender: sender,
+            reciever: reciever,
         });
 
         if (chats) {
@@ -24,7 +24,7 @@ const addChat = async (req, res) => {
 
 const getAllChats = async (req, res) => {
     try {
-        const { from: sender, to: reciever } = req.body;
+        const { sender, reciever } = req.body;
 
         const chats = await ChatModel.find({
             $and: [
