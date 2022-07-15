@@ -26,7 +26,7 @@ const signin = async (req, res) => {
             process.env.SECRET,
             { expiresIn: "1h" }
         )
-        delete existingUser.fullName;
+
         console.log(existingUser);
         res.status(200).json({ result: existingUser, token })
     } catch (error) {

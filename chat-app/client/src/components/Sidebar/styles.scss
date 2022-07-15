@@ -36,6 +36,7 @@
         height: 50px;
         width: 50px;
     }
+
     &__btn {
         border: none;
         outline: none;
@@ -43,12 +44,21 @@
         padding: 0;
     }
 
+    &__searchBar {
+        width: 100%;
+
+        &--Input {
+            border-top-left-radius: .5rem;
+            border-bottom-left-radius: .5rem;
+        }
+    }
+
     &__usersList {
 
 
         &::-webkit-scrollbar {
             width: .2rem;
-            
+
             &-thumb {
                 background-color: #c3c6cf;
                 border-radius: .5rem;

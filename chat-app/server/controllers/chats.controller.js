@@ -27,10 +27,7 @@ const getAllChats = async (req, res) => {
         const { sender, reciever } = req.body;
 
         const chats = await ChatModel.find({
-            $and: [
-                { sender: sender },
-                { reciever: reciever }
-            ]
+            sender, reciever
         }).sort({ createdAt: 1 }).lean();
 
         return res.json(chats);
