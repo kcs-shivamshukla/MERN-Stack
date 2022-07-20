@@ -1,7 +1,21 @@
 import axios from 'axios';
 import { Chat, User } from '../constants/interface';
 
-const BASE_URL = 'http://localhost:5000';
+export const BASE_URL = 'http://localhost:5000';
+
+const value = JSON.parse(localStorage.getItem("profile") || "{}")
+
+var localStorageValue = value.token
+
+
+axios.interceptors.request.use((req) => {
+    if (localStorage.getItem("profile")) {
+        if (req.headers) {
+            req.headers.authorization = `Bearer ${localStorageValue}`;
+        }
+    }
+    return req;
+});
 
 export const signin = (formData: User) => axios.post(`${BASE_URL}/users/signin`, formData)
 

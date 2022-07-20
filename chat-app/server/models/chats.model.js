@@ -10,10 +10,7 @@ const chatSchema = mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
         },
-        reciever: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        }
+        reciever: Array
     },
     {
         timestamps: true

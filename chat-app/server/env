@@ -1,5 +1,0 @@
-PORT=5000
-
-MONGO_URI="mongodb+srv://shivamp:shivamp1234@cluster0.csg93.mongodb.net/chatApp?retryWrites=true&w=majority"
-
-SECRET = "test"

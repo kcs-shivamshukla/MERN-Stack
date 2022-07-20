@@ -1,7 +1,8 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-// const socket = require('socket.io');
+const { Server } = require('socket.io');
+const http = require('http');
 
 //Database import
 const connectDB = require('./db/db.js')
@@ -16,6 +17,8 @@ dotenv.config();
 const PORT = process.env.PORT;
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server)
 
 app.use(cors({
     origin: 'http://localhost:3000'
@@ -28,36 +31,32 @@ app.use(express.urlencoded({ extended: true })) //x-www-form
 app.use("/chats", chatRoutes);
 app.use("/users", userRoutes);
 
-const server = () => {
+
+const createServer = () => {
     try {
         connectDB().then(
-            app.listen(PORT, () => console.log(`✅ Server listening on port ${PORT}`))
+            server.listen(PORT, () => console.log(`✅ Server listening on port ${PORT}`))
         );
     } catch (error) {
         console.log(error);
     }
 }
 
-server();
+createServer();
 
-// const io = socket(server, {
-//     cors: {
-//         origin: 'http://localhost:3000',
-//         credentials: true
-//     }
-// });
 
-// global.usersOnline = new Map();
+global.usersOnline = new Map();
 
-// io.on("connection", (socket) => {
-//     socket.on("addUser", (userId) => {
-//         usersOnline.set(userId, socket.id);
-//     })
+io.on("connection", (socket) => {
+    // socket.on("addUser", (userId) => {
+    //     usersOnline.set(userId, socket.id);
+    // })
+    console.log(`User Connected:${socket.id}`);
 
-//     socket.on("sendChat", (data) => {
-//         const sendSocket = usersOnline.get(data.to);
-//         if (sendSocket) {
-//             socket.to(sendSocket).emit("chat recieved", data.chat);
-//         }
-//     });
-// })
+    socket.on("sendChat", (data) => {
+        const sendSocket = usersOnline.get(data.to);
+        if (sendSocket) {
+            socket.to(sendSocket).emit("chatRrecieved", data.chat);
+        }
+    });
+})

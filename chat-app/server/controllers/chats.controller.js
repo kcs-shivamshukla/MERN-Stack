@@ -26,8 +26,16 @@ const getAllChats = async (req, res) => {
     try {
         const { sender, reciever } = req.body;
 
+        // const chatQuery = {}
+
+        // chatQuery['$or'] = [
+        //     { sender, reciever },
+        //     { sender: reciever, reciever: sender }
+        // ]
+
+
         const chats = await ChatModel.find({
-            sender, reciever
+            $or: [{ sender, reciever }, { sender: reciever, reciever: sender }]
         }).sort({ createdAt: 1 }).lean();
 
         return res.json(chats);

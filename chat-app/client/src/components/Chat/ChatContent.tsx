@@ -11,17 +11,17 @@ export default function ChatContent(props: ChatContentProps) {
   const { chats, loggedUser } = props;
 
   return (
-    <Row className="chat__detailsContainer">
+    <Row className="chat__detailsContainer pt-2">
       <Col>
         <div
           style={{ height: "100%" }}
-          className="d-flex flex-column justify-content-end"
+          className="d-flex flex-column justify-content-end scrollbar"
         >
           {chats &&
             chats.map((chat, index) => {
               return (
                 <div
-                  className={`d-flex align-items-center justify-content-${
+                  className={`d-flex scrollbar align-items-center justify-content-${
                     loggedUser._id === chat.sender ? "end" : "start"
                   }`}
                   key={index}

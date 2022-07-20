@@ -19,12 +19,12 @@
             margin-block: 0;
             margin-bottom: .25rem;
             margin-top: .2rem;
-            font-size: 1.25rem;
+            font-size: 1.3rem;
         }
 
         &--secondary {
             margin-block: 0;
-            font-size: .75rem;
+            font-size: .8rem;
         }
     }
 
@@ -54,6 +54,14 @@
     }
 
     &__usersList {
+
+        &--users {
+            border-radius: .2rem;
+        }
+
+        &--selected {
+            background-color: #c3c6cf;
+        }
 
 
         &::-webkit-scrollbar {

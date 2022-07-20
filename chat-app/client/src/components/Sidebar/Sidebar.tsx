@@ -13,20 +13,22 @@ import {
 } from "react-bootstrap";
 
 import "./styles.scss";
-import { User } from "../../constants/interface";
+import { User, Chat } from "../../constants/interface";
 
 interface SidebarProps {
   users: User[];
   activeChat(data: object): void;
   loggedUser: User;
+  chats: Chat[];
 }
 
 function Sidebar(props: SidebarProps) {
-  const { users, activeChat, loggedUser } = props;
+  const { users, activeChat, loggedUser, chats } = props;
   const navigate = useNavigate();
 
   const [show, setShow] = useState<boolean>(false);
   const [searchShow, setSearchShow] = useState<boolean>(false);
+  const [currentSelected, setCurrentSelected] = useState<number>();
 
   const handleOpen = () => {
     setShow(true);
@@ -36,8 +38,9 @@ function Sidebar(props: SidebarProps) {
     setShow(false);
   };
 
-  const handleActiveChat = (user: object) => {
+  const handleActiveChat = (user: object, index: number) => {
     activeChat(user);
+    setCurrentSelected(index);
   };
 
   const handleLogout = () => {
@@ -45,12 +48,20 @@ function Sidebar(props: SidebarProps) {
     navigate("/");
   };
 
+  const createGroup = () => {
+    alert("Group Created.");
+    handleClose();
+  };
+
+  const latestMessage = chats[chats.length - 1];
+  console.log(latestMessage);
+
   const usersList = users.filter((user) => user._id !== loggedUser._id);
 
   return (
     <>
       <div className="sideBar__container sideBar__container--bg">
-        <Row className="d-flex justify-content-between align-items-center sideBar__header">
+        <Row className="d-flex justify-content-between align-items-center sideBar__header mb-3">
           <h2>{loggedUser.fullName}</h2>
           <div className="sideBar__options">
             <DropdownButton title="Options" variant="outline-secondary">
@@ -88,7 +99,7 @@ function Sidebar(props: SidebarProps) {
                 <Button variant="secondary" onClick={handleClose}>
                   Close
                 </Button>
-                <Button variant="primary" onClick={handleClose}>
+                <Button variant="primary" onClick={createGroup}>
                   Save Changes
                 </Button>
               </Modal.Footer>
@@ -99,7 +110,7 @@ function Sidebar(props: SidebarProps) {
               <InputGroup className="py-2 px-2">
                 <Form.Control
                   type="text"
-                  placeholder="Search for Users"
+                  placeholder="Search Users"
                   className="sideBar__searchBar--Input"
                 />
                 <InputGroup.Text
@@ -113,17 +124,23 @@ function Sidebar(props: SidebarProps) {
           )}
         </Row>
 
-        <div className="sideBar__usersList pb-5">
+        <div className="sideBar__usersList pb-3 px-1">
+          <h6>Chats</h6>
+          <hr />
           {usersList &&
             usersList.map((user, index) => {
               return (
                 <Row
-                  style={{ cursor: "pointer" }}
-                  className="mt-4 position-relative"
-                  key={index}
-                  onClick={() => handleActiveChat(user)}
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  className={`py-3 px-2 mb-2 align-items-center position-relative sideBar__usersList--users sideBar__usersList--${
+                    currentSelected === index ? "selected" : ""
+                  }`}
+                  key={user._id}
+                  onClick={() => handleActiveChat(user, index)}
                 >
-                  <Col md={2} className="pl-3">
+                  <Col md={2} className="pl-2">
                     <Image
                       src={
                         process.env.PUBLIC_URL + "/images/Multiavatar-ETH.png"
@@ -134,7 +151,9 @@ function Sidebar(props: SidebarProps) {
                   </Col>
                   <Col md={8}>
                     <h5 className="sideBar__text--primary">{user.fullName}</h5>
-                    <h6 className="sideBar__text--secondary">Something</h6>
+                    {/* <h6 className="sideBar__text--secondary">
+                      {latestMessage?.chat}
+                    </h6> */}
                   </Col>
                   <Col md={2}>
                     <h6 className="sideBar__text--secondary text-center">4</h6>

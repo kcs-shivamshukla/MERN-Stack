@@ -1,64 +1,88 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
-import Sidebar from '../Sidebar/Sidebar';
-import Chat from '../Chat/Chat';
-import Welcome from '../Chat/Welcome';
-import { getusers } from '../../api';
-import { User } from '../../constants/interface';
-
+import Sidebar from "../Sidebar/Sidebar";
+import ChatContainer from "../Chat/ChatContainer";
+import Welcome from "../Chat/Welcome";
+import { getusers, getAllChats } from "../../api";
+import { User } from "../../constants/interface";
 
 export default function Dashboard() {
-
-
   const [users, setUsers] = useState([]);
-  const [activeChat, setactiveChat] = useState<User>()
+  const [chats, setChats] = useState([]);
+  const [activeChat, setactiveChat] = useState<User>();
 
   const navigate = useNavigate();
 
-  const getAllUsers = async () => {
-    const response = await getusers();
-    console.log(response.data);
-    setUsers(response.data)
-  }
   const localStorageValue = localStorage.getItem("profile");
-  if (typeof localStorageValue === 'string') {
+  if (typeof localStorageValue === "string") {
     var loggedUser = JSON.parse(localStorageValue).result;
   }
 
-  //Use Effect 
+  const getAllUsers = async () => {
+    try {
+      const response = await getusers();
+      console.log(response.data);
+      setUsers(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //Use Effect
   useEffect(() => {
-    if (localStorageValue) {
-      getAllUsers();
+    if (localStorageValue === null) {
+      navigate("/");
     }
-    else {
-      navigate("/")
-    }
-  }, [localStorageValue, navigate])
+    getAllUsers();
+  }, [localStorageValue, navigate]);
 
+  useEffect(() => {
+    const allChats = async () => {
+      const chatDetails = {
+        sender: loggedUser._id,
+        reciever: activeChat?._id,
+      };
+      const { data } = await getAllChats(chatDetails);
+      console.log(data);
+      setChats(data);
+    };
+    allChats();
+  }, [activeChat?._id, loggedUser._id]);
 
-  //Change chat on sidebar 
+  //Change chat on sidebar
   const handleActiveChatChange = (chat: User) => {
-    setactiveChat(chat)
-  }
+    setactiveChat(chat);
+  };
 
-  if(activeChat) console.log(activeChat)
+  // if (activeChat?._id) {
+  //   var latestMessage = chats[chats.length - 1];
+  // }
 
   return (
     <Container fluid>
-      <Row style={{ maxHeight: '100vh' }}>
-        <Col md={3} className='py-4 px-3'>
-          <Sidebar users={users} activeChat={handleActiveChatChange} loggedUser={loggedUser}/>
+      <Row style={{ maxHeight: "100vh" }}>
+        <Col md={3} className="py-4 px-3">
+          <Sidebar
+            users={users}
+            activeChat={handleActiveChatChange}
+            loggedUser={loggedUser}
+            chats={chats}
+          />
         </Col>
-        <Col md={9} className='px-4'>
-        {activeChat === undefined ? 
-          <Welcome /> :
-          <Chat activeChat = {activeChat} loggedUser={loggedUser}/>  
-        }
+        <Col md={9} className="px-4">
+          {activeChat === undefined ? (
+            <Welcome />
+          ) : (
+            <ChatContainer
+              activeChat={activeChat}
+              loggedUser={loggedUser}
+              chats={chats}
+            />
+          )}
         </Col>
       </Row>
     </Container>
-  )
-
+  );
 }
