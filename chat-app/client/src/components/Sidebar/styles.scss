@@ -28,8 +28,13 @@
         }
     }
 
+    &__profilePicture {
+        height: 60px;
+        width: 60px;
+    }
+
     &__icons {
-        margin: 0 10px;
+        margin: 0 10p60
     }
 
     &__img {
@@ -54,9 +59,12 @@
     }
 
     &__usersList {
+        height: inherit;
+        overflow: auto;
 
         &--users {
             border-radius: .2rem;
+            border-bottom: .5px solid #c3c6cf4f;
         }
 
         &--selected {

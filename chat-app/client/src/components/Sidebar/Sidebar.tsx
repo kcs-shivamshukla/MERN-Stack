@@ -61,10 +61,18 @@ function Sidebar(props: SidebarProps) {
   return (
     <>
       <div className="sideBar__container sideBar__container--bg">
-        <Row className="d-flex justify-content-between align-items-center sideBar__header mb-3">
-          <h2>{loggedUser.fullName}</h2>
-          <div className="sideBar__options">
-            <DropdownButton title="Options" variant="outline-secondary">
+        <Row className="d-flex justify-content-between align-items-center sideBar__header pb-2 ml-1">
+          <Image
+            src={`data:image/svg+xml;base64,${loggedUser.profilePicture}`}
+            className="sideBar__profilePicture"
+            rounded
+          />
+          <div className="sideBar__options mr-3">
+            <DropdownButton
+              title="Options"
+              variant="outline-secondary"
+              align="end"
+            >
               <Dropdown.Item onClick={handleOpen}>New Group</Dropdown.Item>
               <Dropdown.Item onClick={() => setSearchShow(true)}>
                 Search
@@ -107,7 +115,7 @@ function Sidebar(props: SidebarProps) {
           </div>
           {searchShow && (
             <div className="sideBar__searchBar">
-              <InputGroup className="py-2 px-2">
+              <InputGroup className="py-4 px-2">
                 <Form.Control
                   type="text"
                   placeholder="Search Users"
@@ -124,44 +132,47 @@ function Sidebar(props: SidebarProps) {
           )}
         </Row>
 
+        <h5 style={{ borderBottom: "1px solid #c3c6cf" }} className="mt-1 ml-3">
+          Chats
+        </h5>
         <div className="sideBar__usersList pb-3 px-1">
-          <h6>Chats</h6>
-          <hr />
           {usersList &&
             usersList.map((user, index) => {
               return (
-                <Row
-                  style={{
-                    cursor: "pointer",
-                  }}
-                  className={`py-3 px-2 mb-2 align-items-center position-relative sideBar__usersList--users sideBar__usersList--${
-                    currentSelected === index ? "selected" : ""
-                  }`}
-                  key={user._id}
-                  onClick={() => handleActiveChat(user, index)}
-                >
-                  <Col md={2} className="pl-2">
-                    <Image
-                      src={
-                        process.env.PUBLIC_URL + "/images/Multiavatar-ETH.png"
-                      }
-                      className="sideBar__img"
-                      rounded
-                    />
-                  </Col>
-                  <Col md={8}>
-                    <h5 className="sideBar__text--primary">{user.fullName}</h5>
-                    {/* <h6 className="sideBar__text--secondary">
-                      {latestMessage?.chat}
-                    </h6> */}
-                  </Col>
-                  <Col md={2}>
-                    <h6 className="sideBar__text--secondary text-center">4</h6>
-                    <h6 className="sideBar__text--secondary text-center">
-                      10:35
-                    </h6>
-                  </Col>
-                </Row>
+                <>
+                  <Row
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    className={`py-3 px-2 ml-1 mr-2 mb-2 align-items-center position-relative sideBar__usersList--users sideBar__usersList--${
+                      currentSelected === index ? "selected" : ""
+                    }`}
+                    key={user._id}
+                    onClick={() => handleActiveChat(user, index)}
+                  >
+                    <Col md={2} className="pl-2">
+                      <Image
+                        src={`data:image/svg+xml;base64,${user.profilePicture}`}
+                        className="sideBar__img"
+                        rounded
+                      />
+                    </Col>
+                    <Col md={9}>
+                      <h5 className="sideBar__text--primary">
+                        {user.fullName}
+                      </h5>
+                      {/* <h6 className="sideBar__text--secondary">
+                        {latestMessage?.chat}
+                      </h6> */}
+                    </Col>
+                    {/* <Col md={2}>
+                      <h6 className="sideBar__text--secondary text-center">4</h6>
+                      <h6 className="sideBar__text--secondary text-center">
+                        10:35
+                      </h6>
+                    </Col> */}
+                  </Row>
+                </>
               );
             })}
         </div>

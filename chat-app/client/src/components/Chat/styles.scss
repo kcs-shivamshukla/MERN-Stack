@@ -1,5 +1,11 @@
 .chat {
 
+    &__scrollToBottom {
+        height: auto;
+        width: auto;
+        overflow-y: none;
+    }
+
     // User Details
     &__userDetailsContainer {
         max-height: 20vh;
@@ -7,6 +13,7 @@
     }
 
     &__userDetails {
+
         &--name {
             font-size: 1.5rem;
             margin-bottom: .08rem;
@@ -39,24 +46,67 @@
 
     &__detailsContainer {
         max-height: 90vh;
-        height: 83vh;
+        height: 80vh;
         overflow-y: auto;
     }
 
+    &__heroImg {
+        max-height: 100%;
+        height: 90%;
+        background-image: url(../../../public/images/Welcome-img.png);
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
     &__content {
-        background-color: #71D6A4;
-        padding: .8rem;
+        padding: .3rem .8rem;
         border-radius: .5rem;
+        margin-bottom: .4rem;
+        font-size: 1.05rem;
+        line-height: 1.5;
+
+        &--sender {
+            background-color: #71D6A4;
+        }
+
+        &--reciever {
+            background-color: #71d6a385;
+        }
+
+        &--img {
+            height: 150px;
+            width: 150px;
+
+            &:hover {
+                filter: blur(2px);
+                z-index: 1;
+                cursor: pointer;
+            }
+        }
+
+        &--modalImg {
+            max-height: 450px;
+            max-width: 450px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
     }
 
     //Chat input
 
     &__inputContainer {
-        max-height: 10vh;
+        max-height: 20vh;
         background-color: #c3c6cf;
         border-bottom-left-radius: .25rem;
         border-bottom-right-radius: .25rem;
 
+        .emoji-picker-react {
+            position: absolute;
+            bottom: 60px;
+            left: 0;
+        }
     }
 
     &__input {
@@ -73,18 +123,22 @@
         }
     }
 
+    &__fileUpload {
+        font-size: 1.8rem;
+        text-align: center;
+        cursor: pointer;
+    }
+
     &__sendBtn {
         float: right;
+        font-size: 1.8rem;
         transform: rotate(45deg);
     }
 
-    &__heroImg {
-        max-height: 100%;
-        height: 90%;
-        background-image: url(../../../public/images/Welcome-img.png);
-        background-size: contain;
-        background-position: center;
-        background-repeat: no-repeat;
+    &__emojiIcon {
+        font-size: 1.8rem;
+        text-align: center;
+        cursor: pointer;
     }
 
     &__welcomeText {
@@ -95,14 +149,43 @@
     }
 
     &__userOptions {
-        &--name {
-            font-size: 2rem;
-            background-color: #c3c6cf;
-            border-radius: 50%;
-            height: 50px;
-            width: 50px;
-            text-align: center;
-            cursor: pointer;
+        font-size: 1.5rem;
+        color: #c3c6cf;
+        border-radius: 50%;
+        cursor: pointer;
+
+        &--dropdown {
+            position: absolute;
+            inset: 0px 40px auto auto;
+            transform: translate(0px, 68px);
+            z-index: 1000;
+            float: left;
+            min-width: 10rem;
+            padding: 0.5rem 0;
+            margin: 0.125rem 0 0;
+            font-size: 1rem;
+            list-style: none;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid rgba(0, 0, 0, .15);
+            border-radius: 0.25rem;
+
+            a {
+                color: rgba(0, 0, 0, 0.644);
+                text-decoration: none;
+                display: block;
+                width: 100%;
+                padding: 0.25rem 1.5rem;
+                clear: both;
+                font-weight: 400;
+                text-align: inherit;
+                white-space: nowrap;
+                border: 0;
+
+                &:hover {
+                    background-color: #c3c6cf1e;
+                }
+            }
         }
     }
 

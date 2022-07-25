@@ -56,14 +56,10 @@ export default function Dashboard() {
     setactiveChat(chat);
   };
 
-  // if (activeChat?._id) {
-  //   var latestMessage = chats[chats.length - 1];
-  // }
-
   return (
     <Container fluid>
       <Row style={{ maxHeight: "100vh" }}>
-        <Col md={3} className="py-4 px-3">
+        <Col md={3} className="py-4 px-2">
           <Sidebar
             users={users}
             activeChat={handleActiveChatChange}

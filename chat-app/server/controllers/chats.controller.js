@@ -3,16 +3,16 @@ const ChatModel = require('../models/chats.model.js');
 const addChat = async (req, res) => {
 
     try {
-        console.log(req.body);
-        const { chat, sender, reciever } = req.body;
+        const { chat, sender, reciever, files } = req.body;
         const chats = await ChatModel.create({
             chat: chat,
             sender: sender,
             reciever: reciever,
+            files: files
         });
 
         if (chats) {
-            console.log(chats);
+            // console.log(chats);
             return res.json({ message: "Chat sent successfully." })
         }
 

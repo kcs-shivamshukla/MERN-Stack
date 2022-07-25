@@ -1,0 +1,52 @@
+.profilePicture {
+    &__container {
+        height: 100vh;
+    }
+
+
+
+    &__img {
+        height: 100px;
+        cursor: pointer;
+        width: 100px;
+        transition: all ease-in .4s;
+
+        &--selected {
+            transform: scale(1.3);
+        }
+    }
+
+    &__btn {
+        background-color: #71d6a4;
+        border: 0;
+        font-weight: 600;
+        color: #fff;
+        margin: 0 auto;
+        transition: all ease-in .3s;
+
+        &:hover {
+            background-color: #71d6a35b;
+            color: #71d6a4;
+        }
+
+        &:focus {
+            background-color: #71d6a35b;
+        }
+    }
+
+    &__spinner {
+        width: 88px;
+        height: 88px;
+        border-radius: 50%;
+        border: 14.1px solid;
+        border-color: #dbdcef;
+        border-right-color: #71d6a4;
+        animation: spinner-d3wgkg 1s infinite linear;
+
+        @keyframes spinner-d3wgkg {
+            to {
+                transform: rotate(1turn);
+            }
+        }
+    }
+}

@@ -27,7 +27,6 @@ const signin = async (req, res) => {
             { expiresIn: "1h" }
         )
 
-        console.log(existingUser);
         res.status(200).json({ result: existingUser, token })
     } catch (error) {
         console.log(error);
@@ -67,13 +66,35 @@ const signup = async (req, res) => {
     }
 }
 
+const setProfilePicture = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const profilePicture = req.body.selectedImage;
+
+        const userData = await User.findByIdAndUpdate(
+            userId,
+            {
+                profilePicture
+            },
+            { new: true }
+        );
+
+        return res.json({
+            profilePicture: userData.profilePicture
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const getUsers = async (req, res) => {
 
     try {
 
         const users = await User.find().select([
             "fullName",
-            "email"
+            "email",
+            "profilePicture"
         ]);
         return res.json(users);
     }
@@ -82,4 +103,4 @@ const getUsers = async (req, res) => {
         res.status(404).json({ message: 'Users not found.' })
     }
 }
-module.exports = { signin, signup, getUsers }
+module.exports = { signin, signup, getUsers, setProfilePicture }

@@ -61,7 +61,7 @@ export default function Signup() {
           email: "",
           password: "",
         });
-        navigate("/dashboard");
+        navigate("/setprofilepicture");
       } catch (error: any) {
         toast.error(error.response.data.message, { autoClose: 5000 });
       }
