@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Chat, User } from '../constants/interface';
+import { Chat, User, Search, Group } from '../constants/interface';
 
 export const BASE_URL = 'http://localhost:5000';
 
@@ -28,6 +28,17 @@ export const setprofilepicture = (userId: String, selectedImage: String) => axio
 
 export const getusers = () => axios.get(`${BASE_URL}/users/getUsers`);
 
-export const sendChat = (chatContent: Chat) => axios.post(`${BASE_URL}/chats/addChat`, chatContent)
+export const searchUsers = (searchUserDetails: Search) => {
+
+    const { keyword, sender } = searchUserDetails;
+
+    return axios.get(`${BASE_URL}/users/searchUsers?keyword=${keyword}&sender=${sender}`);
+}
+
+export const sendChat = (chatContent: Chat) => axios.post(`${BASE_URL}/chats/addChat`, chatContent);
+
+export const createGroupChat = (groupChatDetails: Group) => axios.post(`${BASE_URL}/chats/createGroup`, groupChatDetails);
+
+export const getGroups = () => axios.get(`${BASE_URL}/chats/getGroups`);
 
 export const getAllChats = (chatDetails: Chat) => axios.post(`${BASE_URL}/chats/getallchats`, chatDetails);

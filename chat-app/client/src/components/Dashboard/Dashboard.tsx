@@ -5,12 +5,13 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import ChatContainer from "../Chat/ChatContainer";
 import Welcome from "../Chat/Welcome";
-import { getusers, getAllChats } from "../../api";
+import { getusers, getAllChats, getGroups } from "../../api";
 import { User } from "../../constants/interface";
 
 export default function Dashboard() {
   const [users, setUsers] = useState([]);
   const [chats, setChats] = useState([]);
+  const [groups, setGroups] = useState([]);
   const [activeChat, setactiveChat] = useState<User>();
 
   const navigate = useNavigate();
@@ -30,12 +31,23 @@ export default function Dashboard() {
     }
   };
 
+  const getAllGroups = async () => {
+    try {
+      const response = await getGroups();
+      console.log(response.data);
+      setGroups(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   //Use Effect
   useEffect(() => {
     if (localStorageValue === null) {
       navigate("/");
     }
     getAllUsers();
+    getAllGroups();
   }, [localStorageValue, navigate]);
 
   useEffect(() => {
@@ -62,7 +74,9 @@ export default function Dashboard() {
         <Col md={3} className="py-4 px-2">
           <Sidebar
             users={users}
-            activeChat={handleActiveChatChange}
+            groups={groups}
+            activeChat={activeChat}
+            handleActiveChatChange={handleActiveChatChange}
             loggedUser={loggedUser}
             chats={chats}
           />

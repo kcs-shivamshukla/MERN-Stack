@@ -45,18 +45,18 @@ const createServer = () => {
 createServer();
 
 
-global.usersOnline = new Map();
+// global.usersOnline = new Map();
 
-io.on("connection", (socket) => {
-    // socket.on("addUser", (userId) => {
-    //     usersOnline.set(userId, socket.id);
-    // })
-    console.log(`User Connected:${socket.id}`);
+// io.on("connection", (socket) => {
+//     socket.on("addUser", (userId) => {
+//         usersOnline.set(userId, socket.id);
+//     })
+//     console.log(`User Connected:${socket.id}`);
 
-    socket.on("sendChat", (data) => {
-        const sendSocket = usersOnline.get(data.to);
-        if (sendSocket) {
-            socket.to(sendSocket).emit("chatRrecieved", data.chat);
-        }
-    });
-})
+//     socket.on("sendChat", (data) => {
+//         const sendSocket = usersOnline.get(data.to);
+//         if (sendSocket) {
+//             socket.to(sendSocket).emit("chatRrecieved", data.chat);
+//         }
+//     });
+// })

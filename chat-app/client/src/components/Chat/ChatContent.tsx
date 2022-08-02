@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Row,
@@ -8,6 +9,7 @@ import {
   Form,
   Container,
 } from "react-bootstrap";
+
 import { Chat, User } from "../../constants/interface";
 
 interface ChatContentProps {
@@ -55,13 +57,23 @@ export default function ChatContent(props: ChatContentProps) {
                     key={index}
                   >
                     {chat.chat && (
-                      <p
-                        className={`chat__content chat__content--${
-                          loggedUser._id === chat.sender ? "sender" : "reciever"
-                        }`}
-                      >
-                        {chat.chat}
-                      </p>
+                      <>
+                        <p
+                          className={`chat__content chat__content--${
+                            loggedUser._id === chat.sender
+                              ? "sender"
+                              : "reciever"
+                          }`}
+                        >
+                          {chat.chat}
+                        </p>
+                        <span
+                          style={{ fontSize: ".8rem", color: "#c3c6cf" }}
+                          className="ml-2"
+                        >
+                          {moment(chat.createdAt).format("hh:mm A")}
+                        </span>
+                      </>
                     )}
 
                     {chat.files && (

@@ -14,6 +14,9 @@ body {
   box-sizing: border-box;
   overflow: hidden;
 }
+a {
+  cursor: pointer;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

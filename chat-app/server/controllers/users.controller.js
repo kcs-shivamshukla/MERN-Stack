@@ -68,6 +68,7 @@ const signup = async (req, res) => {
 
 const setProfilePicture = async (req, res) => {
     try {
+        console.log(req.params);
         const userId = req.params.id;
         const profilePicture = req.body.selectedImage;
 
@@ -103,4 +104,25 @@ const getUsers = async (req, res) => {
         res.status(404).json({ message: 'Users not found.' })
     }
 }
-module.exports = { signin, signup, getUsers, setProfilePicture }
+
+const searchUsers = async (req, res) => {
+    const searchKeyword = req.query.keyword;
+    const { sender } = req.query;
+
+    if (searchKeyword) {
+        const users = await User.find({
+            $or: [
+                { fullName: { $regex: req.query.keyword, $options: "i" } },
+                { email: { $regex: req.query.keyword, $options: "i" } },
+            ]
+        }).find({ _id: { $ne: sender } }).select([
+            "fullName",
+            "profilePicture"
+        ]);
+        res.send(users);
+    }
+
+}
+
+
+module.exports = { signin, signup, getUsers, setProfilePicture, searchUsers }

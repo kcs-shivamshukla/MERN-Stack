@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Row, Col, Modal, Form, Button } from "react-bootstrap";
 import { EmojiSmile, Paperclip, Send } from "react-bootstrap-icons";
 import Picker from "emoji-picker-react";
+import { toast } from "react-toastify";
 
 interface ChatInputProps {
   handleChat(data: string, file: string): void;
@@ -55,6 +56,7 @@ export default function ChatInput(props: ChatInputProps) {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
     console.log(fileList);
+    toast.success("File Selected");
 
     if (fileList) {
       toBase64(fileList[0]);
