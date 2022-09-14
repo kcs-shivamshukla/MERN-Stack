@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Chat, User, Search, Group } from '../constants/interface';
 
-const BASE_URL = 'http://localhost:5000';
+export const BASE_URL = 'http://localhost:5000';
 
 const value = JSON.parse(localStorage.getItem("profile") || "{}")
 
